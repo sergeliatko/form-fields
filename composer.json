@@ -1,0 +1,33 @@
+{
+  "name": "sergeliatko/form-fields",
+  "type": "library",
+  "description": "PHP form fields builder for WordPress projects.",
+  "keywords": [
+    "wordpress",
+    "html"
+  ],
+  "homepage": "https://github.com/sergeliatko/form-fields",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Serge Liatko",
+      "email": "contact@sergeliatko.com",
+      "homepage": "https://sergeliatko.com",
+      "role": "Developer"
+    }
+  ],
+  "funding": [
+    {
+      "type": "PayPal.me",
+      "url": "https://paypal.me/sergeliatko"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "SergeLiatko\\FormFields\\": "src"
+    }
+  }
+}
