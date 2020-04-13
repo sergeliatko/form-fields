@@ -50,5 +50,4 @@ class Textarea extends FormField {
 		return parent::setValue( $value );
 	}
 
-
 }
