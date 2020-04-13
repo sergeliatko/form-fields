@@ -15,6 +15,20 @@ use SergeLiatko\HTML\Select as SelectTag;
 class Select extends FormField {
 
 	/**
+	 * @return array
+	 */
+	protected function getDefaultArguments() {
+		return $this->parse_args_recursive(
+			array(
+				'container_attrs' => array(
+					'class' => 'form-field form-field-select',
+				),
+			),
+			parent::getDefaultArguments()
+		);
+	}
+
+	/**
 	 * @param mixed  $value
 	 * @param string $label
 	 * @param array  $current
