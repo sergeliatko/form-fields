@@ -11,6 +11,18 @@ namespace SergeLiatko\FormFields;
 class InputDate extends Input {
 
 	/**
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function HTML( array $args ) {
+		$instance = new self( $args );
+
+		return $instance->toHTML();
+	}
+
+
+	/**
 	 * InputDate constructor.
 	 *
 	 * @param array $args

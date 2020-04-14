@@ -11,6 +11,17 @@ namespace SergeLiatko\FormFields;
 class InputSubmit extends Input {
 
 	/**
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function HTML( array $args ) {
+		$instance = new self( $args );
+
+		return $instance->toHTML();
+	}
+
+	/**
 	 * InputSubmit constructor.
 	 *
 	 * @param array $args

@@ -11,6 +11,17 @@ namespace SergeLiatko\FormFields;
 class InputWeek extends Input {
 
 	/**
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function HTML( array $args ) {
+		$instance = new self( $args );
+
+		return $instance->toHTML();
+	}
+
+	/**
 	 * InputWeek constructor.
 	 *
 	 * @param array $args

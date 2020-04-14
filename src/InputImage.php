@@ -11,6 +11,17 @@ namespace SergeLiatko\FormFields;
 class InputImage extends Input {
 
 	/**
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function HTML( array $args ) {
+		$instance = new self( $args );
+
+		return $instance->toHTML();
+	}
+
+	/**
 	 * InputImage constructor.
 	 *
 	 * @param array $args

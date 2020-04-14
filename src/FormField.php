@@ -136,6 +136,17 @@ class FormField {
 	protected $wrap_tag;
 
 	/**
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function HTML( array $args ) {
+		$instance = new self( $args );
+
+		return $instance->toHTML();
+	}
+
+	/**
 	 * FormField constructor.
 	 *
 	 * @param array $args
@@ -233,24 +244,6 @@ class FormField {
 		self::setIds( $ids );
 
 		return $id;
-	}
-
-	/**
-	 * @param array $args
-	 *
-	 * @return \SergeLiatko\FormFields\FormField
-	 */
-	public static function getInstance( array $args ) {
-		return new self( $args );
-	}
-
-	/**
-	 * @param array $args
-	 *
-	 * @return string
-	 */
-	public static function HTML( array $args ) {
-		return self::getInstance( $args )->toHTML();
 	}
 
 	/**

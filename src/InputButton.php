@@ -11,6 +11,17 @@ namespace SergeLiatko\FormFields;
 class InputButton extends Input {
 
 	/**
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function HTML( array $args ) {
+		$instance = new self( $args );
+
+		return $instance->toHTML();
+	}
+
+	/**
 	 * InputButton constructor.
 	 *
 	 * @param array $args

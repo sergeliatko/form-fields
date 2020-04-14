@@ -11,6 +11,17 @@ namespace SergeLiatko\FormFields;
 class InputSearch extends Input {
 
 	/**
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function HTML( array $args ) {
+		$instance = new self( $args );
+
+		return $instance->toHTML();
+	}
+
+	/**
 	 * InputSearch constructor.
 	 *
 	 * @param array $args

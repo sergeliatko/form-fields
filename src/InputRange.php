@@ -11,6 +11,17 @@ namespace SergeLiatko\FormFields;
 class InputRange extends Input {
 
 	/**
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function HTML( array $args ) {
+		$instance = new self( $args );
+
+		return $instance->toHTML();
+	}
+
+	/**
 	 * InputRange constructor.
 	 *
 	 * @param array $args

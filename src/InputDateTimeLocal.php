@@ -11,6 +11,17 @@ namespace SergeLiatko\FormFields;
 class InputDateTimeLocal extends Input {
 
 	/**
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function HTML( array $args ) {
+		$instance = new self( $args );
+
+		return $instance->toHTML();
+	}
+
+	/**
 	 * InputDateTimeLocal constructor.
 	 *
 	 * @param array $args

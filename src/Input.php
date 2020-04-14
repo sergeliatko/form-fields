@@ -13,6 +13,17 @@ use SergeLiatko\HTML\Input as InputTag;
 class Input extends FormField {
 
 	/**
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function HTML( array $args ) {
+		$instance = new self( $args );
+
+		return $instance->toHTML();
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getInputHTML() {
