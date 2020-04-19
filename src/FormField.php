@@ -400,9 +400,25 @@ class FormField {
 	 * @return string
 	 */
 	public function getFieldHTML() {
-		return $this->isBeforeLabel() ?
+		$output = $this->isBeforeLabel() ?
 			$this->getWrapHTML() . $this->getLabelHTML()
 			: $this->getLabelHTML() . $this->getWrapHTML();
+
+		return $output . $this->getHelpHTML();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getHelpHTML() {
+		return $this->isEmpty( $message = $this->getHelp() ) ?
+			''
+			: Tag::HTML(
+				$this->getHelpAttrs(),
+				$message,
+				$this->getHelpTag(),
+				false
+			);
 	}
 
 	/**
