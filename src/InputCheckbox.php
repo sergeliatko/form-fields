@@ -12,16 +12,7 @@ use SergeLiatko\HTML\Input as InputTag;
  */
 class InputCheckbox extends FormField {
 
-	/**
-	 * @param array $args
-	 *
-	 * @return string
-	 */
-	public static function HTML( array $args ) {
-		$instance = new self( $args );
-
-		return $instance->toHTML();
-	}
+	use StaticCallHTMLTrait;
 
 	/**
 	 * InputCheckbox constructor.

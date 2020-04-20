@@ -14,16 +14,7 @@ use SergeLiatko\HTML\Select as SelectTag;
  */
 class Select extends FormField {
 
-	/**
-	 * @param array $args
-	 *
-	 * @return string
-	 */
-	public static function HTML( array $args ) {
-		$instance = new self( $args );
-
-		return $instance->toHTML();
-	}
+	use StaticCallHTMLTrait;
 
 	/**
 	 * @return array

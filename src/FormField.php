@@ -12,6 +12,8 @@ use SergeLiatko\HTML\Tag;
  */
 class FormField {
 
+	use StaticCallHTMLTrait;
+
 	/**
 	 * @var array $ids Contains all generated HTML ids to avoid collisions.
 	 */
@@ -134,17 +136,6 @@ class FormField {
 	 * @var string $wrap_tag Input wrapper HTML tag.
 	 */
 	protected $wrap_tag;
-
-	/**
-	 * @param array $args
-	 *
-	 * @return string
-	 */
-	public static function HTML( array $args ) {
-		$instance = new self( $args );
-
-		return $instance->toHTML();
-	}
 
 	/**
 	 * FormField constructor.
