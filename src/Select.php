@@ -17,6 +17,44 @@ class Select extends FormField {
 	use StaticCallHTMLTrait;
 
 	/**
+	 * @param array $input_attrs
+	 *
+	 * @return \SergeLiatko\FormFields\Select
+	 */
+	public function setInputAttrs( array $input_attrs ) {
+		if ( isset( $input_attrs['multiple'] ) && isset( $input_attrs['name'] ) ) {
+			if ( '[]' !== substr( $input_attrs['name'], - 2 ) ) {
+				$input_attrs['name'] = $input_attrs['name'] . '[]';
+			}
+		}
+
+		return parent::setInputAttrs( $input_attrs );
+	}
+
+	/**
+	 * @param mixed $value
+	 *
+	 * @return \SergeLiatko\FormFields\Select
+	 */
+	public function setValue( $value ) {
+		return parent::setValue( (array) $value );
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getInputHTML() {
+		$options = $this->getChoices();
+		array_walk( $options, array( $this, 'getOptionHTML' ), $this->getValue() );
+
+		return SelectTag::HTML(
+			$this->getInputAttrs(),
+			$options
+		);
+	}
+
+	/**
 	 * @return array
 	 */
 	protected function getDefaultArguments() {
@@ -60,19 +98,6 @@ class Select extends FormField {
 					$label
 				);
 		}
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getInputHTML() {
-		$options = $this->getChoices();
-		array_walk( $options, array( $this, 'getOptionHTML' ), $this->getValue() );
-
-		return SelectTag::HTML(
-			$this->getInputAttrs(),
-			$options
-		);
 	}
 
 }
