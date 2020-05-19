@@ -38,6 +38,9 @@ class InputCheckbox extends FormField {
 	protected function getDefaultArguments() {
 		return $this->parse_args_recursive(
 			array(
+				'input_attrs'     => array(
+					'value' => '1',
+				),
 				'before_label'    => true,
 				'container_attrs' => array(
 					'class' => 'form-field form-field-checkbox',
