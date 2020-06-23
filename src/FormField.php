@@ -143,6 +143,8 @@ class FormField {
 	 * @param array $args
 	 */
 	public function __construct( array $args ) {
+		//pass parsed args to beforeLoaded() for extensions to hook into
+		$args = $this->beforeLoaded( $this->parse_args_recursive( $args, $this->getDefaultArguments() ) );
 		/**
 		 * @var string $id
 		 * @var array  $input_attrs
@@ -168,10 +170,7 @@ class FormField {
 		 * @var array  $wrap_attrs
 		 * @var string $wrap_tag
 		 */
-		extract(
-			$this->parse_args_recursive( $args, $this->getDefaultArguments() ),
-			EXTR_OVERWRITE
-		);
+		extract( $args, EXTR_OVERWRITE );
 		$this->setInputAttrs( $input_attrs );
 		$this->setId( $id );
 		$this->setValue( $value );
@@ -280,10 +279,11 @@ class FormField {
 	 * @param bool         $preserve_integer_keys
 	 *
 	 * @return array|object
+	 * @noinspection DuplicatedCode
 	 */
 	protected function parse_args_recursive( $args, $default, $preserve_integer_keys = false ) {
 
-		if ( ! is_array( $default ) && ! is_object( $default ) ) {
+		if ( !is_array( $default ) && !is_object( $default ) ) {
 			return wp_parse_args( $args, $default );
 		}
 
@@ -292,7 +292,7 @@ class FormField {
 
 		foreach ( array( $default, $args ) as $elements ) {
 			foreach ( (array) $elements as $key => $element ) {
-				if ( is_integer( $key ) && ! $preserve_integer_keys ) {
+				if ( is_integer( $key ) && !$preserve_integer_keys ) {
 					$output[] = $element;
 				} elseif (
 					isset( $output[ $key ] ) &&
@@ -342,7 +342,7 @@ class FormField {
 	 * @return bool
 	 */
 	protected function noEmptyKeys( $key ) {
-		return is_string( $key ) && ! empty( $key );
+		return is_string( $key ) && !empty( $key );
 	}
 
 	/**
@@ -430,7 +430,7 @@ class FormField {
 	 * @return string
 	 */
 	public function getGroupLabelHTML() {
-		return ( ! $this->isGroup() || $this->isEmpty( $label = $this->getGroupLabel() ) ) ?
+		return ( !$this->isGroup() || $this->isEmpty( $label = $this->getGroupLabel() ) ) ?
 			''
 			: Tag::HTML(
 				$this->getGroupLabelAttrs(),
@@ -458,7 +458,7 @@ class FormField {
 	 * @return string
 	 */
 	public function getId() {
-		if ( empty( $this->id ) && ! $this->isEmpty( $id = $this->getInputAttribute( 'id' ) ) ) {
+		if ( empty( $this->id ) && !$this->isEmpty( $id = $this->getInputAttribute( 'id' ) ) ) {
 			$this->setId( $id );
 		}
 
@@ -489,8 +489,8 @@ class FormField {
 	 * @return FormField
 	 */
 	public function setInputAttrs( array $input_attrs ) {
-		if ( ! isset( $input_attrs['id'] ) || empty( $input_attrs['id'] ) ) {
-			if ( ! empty( $input_attrs['name'] ) ) {
+		if ( !isset( $input_attrs['id'] ) || empty( $input_attrs['id'] ) ) {
+			if ( !empty( $input_attrs['name'] ) ) {
 				$id                = $this->constructId( $input_attrs['name'] );
 				$input_attrs['id'] = $id;
 			}
@@ -582,7 +582,7 @@ class FormField {
 	 * @return FormField
 	 */
 	public function setBeforeLabel( $before_label ) {
-		$this->before_label = ! empty( $before_label );
+		$this->before_label = !empty( $before_label );
 
 		return $this;
 	}
@@ -618,7 +618,7 @@ class FormField {
 	 * @return FormField
 	 */
 	public function setLabelAttrs( array $label_attrs ) {
-		if ( ! $this->isEmpty( $id = $this->getId() ) ) {
+		if ( !$this->isEmpty( $id = $this->getId() ) ) {
 			$label_attrs = wp_parse_args( $label_attrs, array(
 				'for' => $id,
 			) );
@@ -713,7 +713,7 @@ class FormField {
 	 * @return FormField
 	 */
 	public function setContainer( $container ) {
-		$this->container = ! empty( $container );
+		$this->container = !empty( $container );
 
 		return $this;
 	}
@@ -767,7 +767,7 @@ class FormField {
 	 * @return FormField
 	 */
 	public function setGroup( $group ) {
-		$this->group = ! empty( $group );
+		$this->group = !empty( $group );
 
 		return $this;
 	}
@@ -812,7 +812,7 @@ class FormField {
 	 * @return string
 	 */
 	public function getGroupLabel() {
-		if ( empty( $this->group_label ) && ! $this->isEmpty( $label = $this->getLabel() ) ) {
+		if ( empty( $this->group_label ) && !$this->isEmpty( $label = $this->getLabel() ) ) {
 			$this->setGroupLabel( $label );
 		}
 
@@ -879,7 +879,7 @@ class FormField {
 	 * @return FormField
 	 */
 	public function setWrap( $wrap ) {
-		$this->wrap = ! empty( $wrap );
+		$this->wrap = !empty( $wrap );
 
 		return $this;
 	}
@@ -918,6 +918,18 @@ class FormField {
 		$this->wrap_tag = $wrap_tag;
 
 		return $this;
+	}
+
+	/**
+	 * This function is called before the constructor starts processing arguments.
+	 * Can be overwritten by class extensions to hook into the constructor.
+	 *
+	 * @param array $args
+	 *
+	 * @return array
+	 */
+	protected function beforeLoaded( array $args = array() ): array {
+		return $args;
 	}
 
 }
