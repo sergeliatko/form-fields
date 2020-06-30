@@ -48,7 +48,7 @@ class Gallery extends FormField {
 		return array(
 			'form-field-gallery' => array(
 				'form-field-gallery',
-				self::maybeMinify( self::pathToUrl( dirname( dirname( __FILE__ ) ) . '/includes/css/gallery.css' ) ),
+				self::maybeMinify( self::pathToUrl( dirname( __FILE__, 2 ) . '/includes/css/gallery.css' ) ),
 				array( 'dashicons' ),
 				null,
 				'all',
@@ -60,7 +60,7 @@ class Gallery extends FormField {
 		return array(
 			'form-field-gallery' => array(
 				'form-field-gallery',
-				self::maybeMinify( self::pathToUrl( dirname( dirname( __FILE__ ) ) . '/includes/js/gallery.js' ) ),
+				self::maybeMinify( self::pathToUrl( dirname( __FILE__, 2 ) . '/includes/js/gallery.js' ) ),
 				array( 'jquery-ui-sortable', 'media-upload' ),
 				null,
 				true,
