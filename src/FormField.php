@@ -68,7 +68,8 @@ class FormField {
 	protected $help;
 
 	/**
-	 * @var array $help_attrs An array of help message HTML attributes. Keys are attributes and values are values.
+	 * @var array $help_attrs An array of help message HTML attributes. Keys are attributes and values are
+	 *      values.
 	 */
 	protected $help_attrs;
 
@@ -113,7 +114,8 @@ class FormField {
 	protected $group_label;
 
 	/**
-	 * @var array $group_label_attrs Array of group label HTML attributes. Keys are attributes and values are values.
+	 * @var array $group_label_attrs Array of group label HTML attributes. Keys are attributes and values are
+	 *      values.
 	 */
 	protected $group_label_attrs;
 
@@ -128,7 +130,8 @@ class FormField {
 	protected $wrap;
 
 	/**
-	 * @var array $wrap_attrs An array of input wrapper HTML attributes. Keys are attributes and values are values.
+	 * @var array $wrap_attrs An array of input wrapper HTML attributes. Keys are attributes and values are
+	 *      values.
 	 */
 	protected $wrap_attrs;
 
@@ -213,7 +216,7 @@ class FormField {
 	/**
 	 * @param array $ids
 	 */
-	protected static function setIds( $ids ) {
+	protected static function setIds( array $ids ) {
 		self::$ids = $ids;
 	}
 
@@ -222,7 +225,7 @@ class FormField {
 	 *
 	 * @return string
 	 */
-	protected static function addUniqueId( $id ) {
+	protected static function addUniqueId( string $id ) {
 		if ( in_array( $id, $ids = self::getIds() ) ) {
 			$base  = $id;
 			$index = 2;
@@ -281,7 +284,7 @@ class FormField {
 	 * @return array|object
 	 * @noinspection DuplicatedCode
 	 */
-	protected function parse_args_recursive( $args, $default, $preserve_integer_keys = false ) {
+	protected function parse_args_recursive( $args, $default, $preserve_integer_keys = true ) {
 
 		if ( !is_array( $default ) && !is_object( $default ) ) {
 			return wp_parse_args( $args, $default );
@@ -318,7 +321,7 @@ class FormField {
 	 *
 	 * @return string
 	 */
-	protected function constructId( $name ) {
+	protected function constructId( string $name ) {
 		return self::addUniqueId(
 			trim(
 				preg_replace( '/([^a-z0-9-]+)/', '-', strtolower( trim( $name ) ) ),
@@ -337,12 +340,12 @@ class FormField {
 	}
 
 	/**
-	 * @param string $key
+	 * @param string|int $key
 	 *
 	 * @return bool
 	 */
 	protected function noEmptyKeys( $key ) {
-		return is_string( $key ) && !empty( $key );
+		return !empty( $key );
 	}
 
 	/**
@@ -505,7 +508,7 @@ class FormField {
 	 *
 	 * @return string|null
 	 */
-	public function getInputAttribute( $name ) {
+	public function getInputAttribute( string $name ) {
 		$attributes = (array) $this->getInputAttrs();
 
 		return isset( $attributes[ $name ] ) ? $attributes[ $name ] : null;
@@ -517,7 +520,7 @@ class FormField {
 	 *
 	 * @return FormField
 	 */
-	public function setInputAttribute( $name, $value = '' ) {
+	public function setInputAttribute( string $name, $value = '' ) {
 		$attributes          = (array) $this->getInputAttrs();
 		$attributes[ $name ] = strval( $value );
 		$this->setInputAttrs( $attributes );
@@ -556,14 +559,6 @@ class FormField {
 	 * @return FormField
 	 */
 	public function setChoices( array $choices ) {
-		array_walk( $choices, function ( &$value ) {
-			if ( is_array( $value ) ) {
-				$value = array_filter( $value, array( $this, 'noEmptyKeys' ), ARRAY_FILTER_USE_KEY );
-			} else {
-				$value = strval( $value );
-			}
-		} );
-		$choices       = array_filter( $choices, array( $this, 'noEmptyKeys' ), ARRAY_FILTER_USE_KEY );
 		$this->choices = $choices;
 
 		return $this;
@@ -581,7 +576,7 @@ class FormField {
 	 *
 	 * @return FormField
 	 */
-	public function setBeforeLabel( $before_label ) {
+	public function setBeforeLabel( bool $before_label ) {
 		$this->before_label = !empty( $before_label );
 
 		return $this;
@@ -599,7 +594,7 @@ class FormField {
 	 *
 	 * @return FormField
 	 */
-	public function setLabel( $label ) {
+	public function setLabel( string $label ) {
 		$this->label = $label;
 
 		return $this;
@@ -640,7 +635,7 @@ class FormField {
 	 *
 	 * @return FormField
 	 */
-	public function setLabelTag( $label_tag ) {
+	public function setLabelTag( string $label_tag ) {
 		$this->label_tag = $label_tag;
 
 		return $this;
@@ -658,7 +653,7 @@ class FormField {
 	 *
 	 * @return FormField
 	 */
-	public function setHelp( $help ) {
+	public function setHelp( string $help ) {
 		$this->help = $help;
 
 		return $this;
@@ -694,7 +689,7 @@ class FormField {
 	 *
 	 * @return FormField
 	 */
-	public function setHelpTag( $help_tag ) {
+	public function setHelpTag( string $help_tag ) {
 		$this->help_tag = $help_tag;
 
 		return $this;
@@ -712,7 +707,7 @@ class FormField {
 	 *
 	 * @return FormField
 	 */
-	public function setContainer( $container ) {
+	public function setContainer( bool $container ) {
 		$this->container = !empty( $container );
 
 		return $this;
@@ -748,7 +743,7 @@ class FormField {
 	 *
 	 * @return FormField
 	 */
-	public function setContainerTag( $container_tag ) {
+	public function setContainerTag( string $container_tag ) {
 		$this->container_tag = $container_tag;
 
 		return $this;
@@ -766,7 +761,7 @@ class FormField {
 	 *
 	 * @return FormField
 	 */
-	public function setGroup( $group ) {
+	public function setGroup( bool $group ) {
 		$this->group = !empty( $group );
 
 		return $this;
@@ -802,7 +797,7 @@ class FormField {
 	 *
 	 * @return FormField
 	 */
-	public function setGroupTag( $group_tag ) {
+	public function setGroupTag( string $group_tag ) {
 		$this->group_tag = $group_tag;
 
 		return $this;
@@ -824,7 +819,7 @@ class FormField {
 	 *
 	 * @return FormField
 	 */
-	public function setGroupLabel( $group_label ) {
+	public function setGroupLabel( string $group_label ) {
 		$this->group_label = $group_label;
 
 		return $this;
@@ -860,7 +855,7 @@ class FormField {
 	 *
 	 * @return FormField
 	 */
-	public function setGroupLabelTag( $group_label_tag ) {
+	public function setGroupLabelTag( string $group_label_tag ) {
 		$this->group_label_tag = $group_label_tag;
 
 		return $this;
@@ -878,7 +873,7 @@ class FormField {
 	 *
 	 * @return FormField
 	 */
-	public function setWrap( $wrap ) {
+	public function setWrap( bool $wrap ) {
 		$this->wrap = !empty( $wrap );
 
 		return $this;
@@ -914,7 +909,7 @@ class FormField {
 	 *
 	 * @return FormField
 	 */
-	public function setWrapTag( $wrap_tag ) {
+	public function setWrapTag( string $wrap_tag ) {
 		$this->wrap_tag = $wrap_tag;
 
 		return $this;

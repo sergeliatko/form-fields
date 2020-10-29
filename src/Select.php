@@ -69,16 +69,16 @@ class Select extends FormField {
 	}
 
 	/**
-	 * @param mixed  $value
-	 * @param string $label
-	 * @param array  $current
+	 * @param mixed      $value
+	 * @param string|int $label
+	 * @param array      $current
 	 */
 	protected function getOptionHTML( &$value, $label = '', array $current = array() ) {
 		if ( is_array( $value ) ) {
 			array_walk( $value, array( $this, 'getOptionHTML' ), $current );
 			$value = OptgroupTag::HTML(
 				array(
-					'label' => $label,
+					'label' => strval( $label ),
 				),
 				$value
 			);
@@ -89,13 +89,13 @@ class Select extends FormField {
 						'value'    => $value,
 						'selected' => 'selected',
 					),
-					$label
+					strval( $label )
 				)
 				: OptionTag::HTML(
 					array(
 						'value' => $value,
 					),
-					$label
+					strval( $label )
 				);
 		}
 	}
