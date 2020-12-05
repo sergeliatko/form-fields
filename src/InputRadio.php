@@ -29,7 +29,7 @@ class InputRadio extends FormField {
 	 *
 	 * @return \SergeLiatko\FormFields\FormField
 	 */
-	public function setValue( $value ) {
+	public function setValue( $value ): FormField {
 		// only one radio button may be selected at a time
 		if ( is_array( $value ) ) {
 			$value = array_shift( $value );
@@ -37,7 +37,7 @@ class InputRadio extends FormField {
 		// make sure our value is a string
 		$value = strval( $value );
 		// set checked attribute if needed
-		if ( $this->getInputAttribute( 'value' ) == $value ) {
+		if ( strval( $this->getInputAttribute( 'value' ) ) === $value ) {
 			$this->setInputAttribute( 'checked', 'checked' );
 		}
 
@@ -47,14 +47,14 @@ class InputRadio extends FormField {
 	/**
 	 * @return string
 	 */
-	public function getInputHTML() {
+	public function getInputHTML(): string {
 		return InputTag::HTML( $this->getInputAttrs() );
 	}
 
 	/**
 	 * @return array
 	 */
-	protected function getDefaultArguments() {
+	protected function getDefaultArguments(): array {
 		return $this->parse_args_recursive(
 			array(
 				'before_label'    => true,
