@@ -24,14 +24,15 @@ class Checkboxes extends FormField {
 
 	/**
 	 * @return string
+	 * @noinspection DuplicatedCode
 	 */
-	public function getInputHTML() {
+	public function getInputHTML(): string {
 		$args = array_filter( get_object_vars( $this ) );
 		// set $before_label explicitly (as if it is false it was done on purpose)
 		$args['before_label'] = $this->isBeforeLabel();
-		// handle the case when no choices is provided - output as a group with the only input
+		// handle the case when no choices is provided - output empty string
 		if ( $this->isEmpty( $choices = $this->getChoices() ) ) {
-			return InputCheckbox::HTML( $args );
+			return '';
 		}
 		// we have choices walk them through and create inputs
 		$output            = '';
@@ -59,7 +60,7 @@ class Checkboxes extends FormField {
 	/**
 	 * @return array
 	 */
-	protected function getDefaultArguments() {
+	protected function getDefaultArguments(): array {
 		return $this->parse_args_recursive(
 			array(
 				'before_label'    => true,
@@ -71,4 +72,5 @@ class Checkboxes extends FormField {
 			parent::getDefaultArguments()
 		);
 	}
+
 }
