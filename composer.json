@@ -24,7 +24,7 @@
     }
   ],
   "require": {
-    "php": ">=5.6.0",
+    "php": ">=7.3",
     "sergeliatko/html": ">=0.0.1"
   },
   "autoload": {
