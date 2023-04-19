@@ -13,30 +13,24 @@ class Editor extends Code {
 	use StaticCallHTMLTrait;
 
 	/**
-	 * @var array $editor_settings
-	 */
-	protected $editor_settings;
-
-	/**
 	 * @return array
 	 */
 	public function getEditorSettings(): array {
-		if ( !is_array( $this->editor_settings ) ) {
-			$this->setEditorSettings( array() );
-		}
-
-		return $this->editor_settings;
-	}
-
-	/**
-	 * @param array $editor_settings
-	 *
-	 * @return Editor
-	 */
-	public function setEditorSettings( array $editor_settings ): Editor {
-		$this->editor_settings = wp_parse_args( $editor_settings, $this->getDefaultEditorSettings() );
-
-		return $this;
+		return array_diff_key(
+			wp_parse_args(
+				wp_parse_args(
+					$this->getInputAttrs(),
+					array(
+						'textarea_name' => $this->getInputAttribute( 'name' ),
+					)
+				),
+				$this->getDefaultEditorSettings()
+			),
+			array(
+				'id'   => '',
+				'name' => '',
+			)
+		);
 	}
 
 	/**
@@ -62,30 +56,9 @@ class Editor extends Code {
 				'container_attrs' => array(
 					'class' => 'form-field form-field-editor',
 				),
-				'editor_settings' => $this->getDefaultEditorSettings(),
 			),
 			parent::getDefaultArguments()
 		);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	protected function beforeLoaded( array $args = array() ): array {
-		$name            = empty( $args['input_attrs']['name'] ) ? '' : $args['input_attrs']['name'];
-		$editor_settings = ( empty( $args['editor_settings'] ) || !is_array( $args['editor_settings'] ) ) ?
-			$this->getDefaultEditorSettings()
-			: $args['editor_settings'];
-		$this->setEditorSettings(
-			wp_parse_args(
-				array(
-					'textarea_name' => $name,
-				),
-				$editor_settings
-			)
-		);
-
-		return parent::beforeLoaded( $args );
 	}
 
 
