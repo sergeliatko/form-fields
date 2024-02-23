@@ -18,7 +18,6 @@ trait StaticCallHTMLTrait {
 	public static function HTML( array $args ) {
 		$instance = new self( $args );
 
-		/** @noinspection PhpUndefinedMethodInspection */
 		return $instance->toHTML();
 	}
 
