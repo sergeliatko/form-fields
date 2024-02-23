@@ -14,7 +14,6 @@ trait HandleMultiDimensionalChoicesTrait {
 	 * @param array $choices
 	 *
 	 * @return \SergeLiatko\FormFields\HandleMultiDimensionalChoicesTrait|\SergeLiatko\FormFields\FormField
-	 * @noinspection PhpUndefinedClassInspection
 	 * @noinspection PhpUnused
 	 */
 	public function setChoices( array $choices ) {
